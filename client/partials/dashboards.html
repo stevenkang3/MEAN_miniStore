@@ -1,0 +1,46 @@
+<div class="col-xs-2">​
+    <div class='row'>
+  <input type="text" placeholder="search..." class="form-control" ng-model="filter_name">​<br>
+  <button type="button" class='btn btn-primary pull-right'>Filter</button>
+  <br><hr>
+</div>
+  </div>
+
+<div class="col-xs-10" class='row'>​
+    <h3>Inventory<h3><hr>
+      <h4><h4>
+      <form>
+      <div class='rowa' ng-init="productLimit = 4">
+        <div class="col-xs-3" ng-repeat="product in orderCtrl.products | filter: filter_name | orderBy: 'created_at' | limitTo: productLimit as productResults">
+          <img class='product' src="{{product.url}}" alt="" />
+          <p class='title' ng-bind="product.name"></p>
+          <p class='title'>({{product.quantity}} left)</p>​
+        </div>​
+      </div>​
+      <button class="btn btn-info col-offset-2" ng-hide="productResults.length === orderCtrl.products.length" ng-click="productLimit = productLimit + 4">Show More...</button>
+      <button class="btn btn-success col-offset-2" ng-hide="productResults.length === orderCtrl.products.length" ng-click="productLimit = orderCtrl.products.length">Show All</button>
+    </form>
+<br><br><br>
+  <form>
+    <div class='row' ng-init="orderLimit = 5">
+      <div class="col-xs-9">
+      <h3>Recent Orders</h3><hr>
+          <p ng-repeat="order in orderCtrl.orders | filter: filter_name | orderBy: 'created_at'| limitTo: orderLimit as orderResults">
+          {{order.name}} purchased {{order.quantity}} {{order.product}} on {{order.created_at | date:'longDate'}}</p>
+        ​</div>
+      </div>
+      <button class="btn btn-info" ng-hide="orderResults.length === orderCtrl.orders.length" ng-click="orderLimit = orderLimit + 5">Show More...</button>
+      <button class="btn btn-success" ng-hide="orderResults.length === orderCtrl.orders.length" ng-click="orderLimit = orderCtrl.orders.length">Show All</button>
+</form><br><br>
+<form>
+    <div class='row' ng-init="customerLimit = 3">
+      <div class="col-xs-9">
+        <h3>New Customers</h3><hr>
+			     <p ng-repeat="customer in orderCtrl.customers | filter: filter_name | orderBy: 'created_at'| limitTo: customerLimit as customerResults">​
+             {{customer.name}} joined the store on ​{{customer.created_at | date:'longDate'}}</p>
+​      </div>
+​    </div>
+  <button class="btn btn-info" ng-hide="customerResults.length === orderCtrl.customers.length" ng-click="customerLimit = customerLimit + 3">Show More...</button>
+  <button class="btn btn-success" ng-hide="customerResults.length === orderCtrl.customers.length" ng-click="customerLimit = orderCtrl.customers.length">Show More...</button>
+</form>
+</div>

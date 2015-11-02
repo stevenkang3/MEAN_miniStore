@@ -1,0 +1,38 @@
+<h2>Products</h2>
+  <div class='container' ng-controller="products as productCtrl">
+
+    <div class="col-xs-3">​
+        <div class='row'>
+      <input type="text" placeholder="search..." class="form-control" ng-model="filter_name">​<br>
+      <button type="button" class='btn btn-info pull-right'>Filter</button>
+      <br><hr>
+      <h3>Add a new product</h3>
+      <div class='error' ng-model='errors' ng-bind ='orderCtrl.errors'>{{error}}</div>
+      <form>
+        <label for="">Name:</label><br><br>
+        <input type="text" ng-model="newProduct.name"  placeholder="name.." required><br><br>
+        <label for="">Image (url):</label><br><br>
+        <input type="text" ng-model="newProduct.url" placeholder='http://' required><br><br>
+        <label for="">Description:</label><br><br>
+        <textarea name="description" ng-model="newProduct.description" required></textarea><br><br>
+        <label for="">Initial Quantity:</label><br><br>
+        <input ng-model="newProduct.quantity" placeholder="ex: 10" required><br><br>
+        <button type="submit" class='btn btn-info' ng-click=productCtrl.addProduct(newProduct)>Create</button>
+      </form>
+    </div>​
+  </div>
+
+  <!-- ******Product List********** -->
+
+  <div class="col-xs-9">​
+    <div class='row' ng-init="orderLimit = 4">
+      <div class="col-xs-3" ng-repeat="product in productCtrl.products | filter: filter_name | orderBy: 'created_at'| limitTo: orderLimit as orderResults">​
+        <img class='product' src="{{product.url}}" alt="" />
+        <p class='title' ng-bind="product.name"></p>
+        <p class='title'>({{product.quantity}} left)</p>​
+        <button class="btn-xs btn-danger pull-right" ng-click="productCtrl.destroyProduct(product)">Remove</button>
+        <button class="btn-xs btn-success" ng-click="productCtrl.editProduct(product)">Edit</button>
+      </div>​
+    </div><br>
+  <button class="btn btn-info" ng-hide="orderResults.length === productCtrl.products.length" ng-click="orderLimit = orderLimit + 3">Show More...</button>
+  </div>
